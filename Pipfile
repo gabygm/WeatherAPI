@@ -9,6 +9,7 @@ uvicorn = "*"
 httpx = "*"
 pytest = "*"
 pytest-mock = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
