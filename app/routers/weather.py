@@ -3,7 +3,7 @@ from typing_extensions import Annotated
 
 from app.services import open_weather_map as service
 from app.models.weather import *
-
+from app.utils.data_conversion import temp_to_celsius, temp_to_fahrenheit
 
 router = APIRouter()
 
@@ -16,10 +16,12 @@ def get_weather(city: str, country: Annotated[str, Query(max_length=2)]) -> Weat
 
 
 def map_to_response(weather):
-    print(weather)
+    temp = weather['main']['temp']
+    temp_celsius = temp_to_celsius(temp)
+    temp_fahrenheit = temp_to_fahrenheit(temp)
     response_weather = WeatherResponse(
         location_name=f"{weather['name']}, {weather['sys']['country']}",
-        temperature=f"{weather['main']['temp']}",
+        temperature=f"{temp_celsius}, {temp_fahrenheit}",
         wind=f"{weather['main']['temp']}",
         cloudiness=f"{weather['weather'][0]['description']}",
         pressure=f"{weather['main']['pressure']} hpa",
