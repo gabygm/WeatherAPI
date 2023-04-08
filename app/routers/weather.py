@@ -1,4 +1,6 @@
-from fastapi import APIRouter, Query
+import pdb
+
+from fastapi import APIRouter, Query, HTTPException
 from typing_extensions import Annotated
 
 from app.services import open_weather_map as service
@@ -10,14 +12,16 @@ router = APIRouter()
 
 
 @router.get("/weather")
-def get_weather(city: str, country: Annotated[str, Query(max_length=2)]) -> WeatherResponse:
-    weather_city = service.get_weather_by_country(city, country)
-    weather_response = map_to_response(weather_city)
-    return weather_response
+def get_weather(city: str, country: Annotated[str, Query(max_length=2)]):
+    weather_by_city = service.get_weather_by_city(city, country)
+    if weather_by_city.status_code == 200:
+        weather_response = map_to_response(weather_by_city.json())
+        return weather_response
+    raise HTTPException(status_code=404, detail=weather_by_city.json())
 
 
-def map_to_response(weather):
-    response_weather = None
+def map_to_response(weather) -> WeatherResponse:
+    weather_response = None
     if weather:
         temp = weather.get('main').get('temp')
         temp_celsius = temp_to_celsius(temp)
@@ -27,7 +31,7 @@ def map_to_response(weather):
         wind_direction = convert_degrees_direction_to_text(wind.get('deg'))
         wind_speed_text = convert_speed_wind_to_text(wind_speed)
 
-        response_weather = WeatherResponse(
+        weather_response = WeatherResponse(
             location_name=f"{weather.get('name')}, {weather.get('sys').get('country')}",
             temperature=f"{temp_celsius}, {temp_fahrenheit}",
             wind=f"{wind_speed_text}, {wind_speed} m/s, {wind_direction}",
@@ -36,9 +40,10 @@ def map_to_response(weather):
             humidity=f"{weather.get('main').get('humidity')}%",
             sunrise=f"{get_hour_time(weather.get('sys').get('sunrise'))}",
             sunset=f"{get_hour_time(weather.get('sys').get('sunset'))}",
-            geo_coordinates=f"[{round(weather.get('coord').get('lat'), 2)}, {round(weather.get('coord').get('lon'), 2)}]",
+            geo_coordinates=f"[{round(weather.get('coord').get('lat'), 2)}, "
+                            f"{round(weather.get('coord').get('lon'), 2)}]",
             requested_time=f"{convert_date_time(weather.get('dt'))}"
         )
 
-    return response_weather
+    return weather_response
 

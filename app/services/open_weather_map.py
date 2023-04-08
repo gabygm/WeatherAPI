@@ -7,11 +7,11 @@ URL = os.getenv("URL")
 APP_ID = os.getenv("APPID")
 
 
-def get_weather_by_country(city, country):
+def get_weather_by_city(city, country):
     client = httpx.Client()
     try:
-        response = client.get(f"{URL}", params={"q": f"{city},{country}", "appid": APP_ID})
-        return response.json()
+        response = client.get(f"{URL}/weather", params={"q": f"{city},{country}", "appid": APP_ID})
+        return response
 
     finally:
         client.close()

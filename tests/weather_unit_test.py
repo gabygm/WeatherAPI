@@ -1,8 +1,11 @@
-import pytest
-from app.services import open_weather_map as service
-from app.utils.data_conversion import temp_to_fahrenheit, temp_to_celsius, get_hour_time, \
-    convert_degrees_direction_to_text, convert_speed_wind_to_text
-from  app.models import weather
+import pdb
+import random
+
+from app.utils.data_conversion import temp_to_fahrenheit, \
+                                      temp_to_celsius,\
+                                      get_hour_time, \
+                                      convert_degrees_direction_to_text, \
+                                      convert_speed_wind_to_text
 from app.routers.weather import map_to_response
 from tests.fakers import weather_fake_consume_api, weather_fake_data_response
 
@@ -10,24 +13,30 @@ from tests.fakers import weather_fake_consume_api, weather_fake_data_response
 class TestConversionData:
 
     def test_given_temp_should_covert_to_celsius(self):
-        temp_kelvin = 292.23
+        temp_kelvin = 273
         temp_c = temp_to_celsius(temp_kelvin)
-        assert temp_c == '19°C'
+        assert temp_c == '0°C'
 
     def test_given_temp_should_covert_to_fahrenheit(self):
-        temp_kelvin = 292.23
+        temp_kelvin = 1
         temp_c = temp_to_fahrenheit(temp_kelvin)
-        assert temp_c == '66F'
+        assert temp_c == '-457F'
 
     def test_given_unix_should_covert_to_hour_time(self):
         unix = 1680995941
         hour_time = get_hour_time(unix)
         assert hour_time == '18:19'
 
-    def test_given_degrees_with_value_zero_should_covert_to_direction_north(self):
-        degrees = 0
+    def test_given_a_number_between_zero_and_ten_degrees_should_covert_to_direction_north(self):
+        degrees = random.randint(0, 10)
         direction = convert_degrees_direction_to_text(degrees)
         assert direction == 'North'
+
+    def test_given_a_number_between_169_and_190_degrees_should_covert_to_direction_south(self):
+
+        degrees = random.randint(169, 190)
+        direction = convert_degrees_direction_to_text(degrees)
+        assert direction == 'South'
 
     def test_given_speed_with_value_less_than_2_should_covert_to_text(self):
         degrees = 1.5
