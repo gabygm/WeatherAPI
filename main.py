@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.routers import weather
+from app.routes import weather_route
 
 app = FastAPI()
 
-app.include_router(weather.router)
+app.include_router(weather_route.router)
