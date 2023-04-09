@@ -7,14 +7,13 @@ from fastapi_cache.backends.redis import RedisCacheBackend, CACHE_KEY
 
 @pytest.fixture
 def client():
-    with TestClient(app) as c:
-        yield c
+    with TestClient(app) as client:
+        yield client
 
 
 def test_given_a_valid_city_and_country_should_response_status_200(client):
     response = client.get("/weather?city=Bogota&country=co")
     assert response.status_code == 200
-    assert response.json() is not None
     assert response.json().get("location_name") == "Bogota, CO"
     assert response.json().get("temperature") is not None
     assert response.json().get("wind") is not None

@@ -17,8 +17,8 @@ class TestConversionData:
 
     def test_given_temp_should_covert_to_fahrenheit(self):
         temp_kelvin = 1
-        temp_c = temp_to_fahrenheit(temp_kelvin)
-        assert temp_c == '-457F'
+        temp_fahrenheit = temp_to_fahrenheit(temp_kelvin)
+        assert temp_fahrenheit == '-457F'
 
     def test_given_unix_should_covert_to_hour_time(self):
         unix = 1680995941

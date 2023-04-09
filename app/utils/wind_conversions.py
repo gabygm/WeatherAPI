@@ -11,5 +11,6 @@ def convert_speed_wind_to_text(speed: float) -> str:
     speed_text = ''
     for limit, description in SCALE_BEAUFORT:
         if speed >= limit:
-            return description
+            speed_text = description
+            break
     return speed_text
