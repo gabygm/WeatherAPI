@@ -37,7 +37,8 @@ Activate the enviroment:
 ```sh
 pipenv install
 ```
-Add secrets, copy the example.env file and rename it to .env and then fill in the secrets
+Add secrets, copy the example.env file and rename it to .env and then fill in the secrets,
+if you need to change the cache time put the time in seconds in the variable ```CACHE_TIME_SECONDS```
 ```
 URL="PUT HERE YOUR WEATHER URL SERVICE"
 APP_ID="PUT HERE YOUR SECRET KEY"
