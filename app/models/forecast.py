@@ -32,5 +32,5 @@ class Forecast(BaseModel):
             temperature_max=f"{temp_to_celsius(temp_max)}",
             pressure=f"{data.get('main').get('pressure')} hpa",
             humidity=f"{data.get('main').get('humidity')}%",
-            description=f"{data.get('weather')[0].get('description')}%"
+            description=f"{data.get('weather')[0].get('description')}"
         )
