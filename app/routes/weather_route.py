@@ -1,4 +1,5 @@
 import json
+
 from fastapi_cache import caches
 from fastapi.logger import logger
 from fastapi import APIRouter, Query, HTTPException, Depends
@@ -22,7 +23,7 @@ async def get_weather(city: str,
                       cache: RedisCacheBackend = Depends(redis_cache)):
     in_cache = await cache.get(f"{city}{country}")
     if not in_cache:
-        weather_by_city = service.get_weather_by_city(city, country)
+        weather_by_city = service.get_weather(city, country)
         if weather_by_city.status_code == 200:
             weather_response = to_weather(weather_by_city.json())
             await cache.set(key=f"{city}{country}",
