@@ -9,6 +9,7 @@ uvicorn = "*"
 httpx = "*"
 python-dotenv = "*"
 fastapi-cache = "*"
+asyncio = "*"
 
 [dev-packages]
 pytest = "*"

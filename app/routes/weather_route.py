@@ -1,16 +1,20 @@
 import json
+import os
 
 from fastapi_cache import caches
 from fastapi.logger import logger
 from fastapi import APIRouter, Query, HTTPException, Depends
 from typing_extensions import Annotated
 from fastapi_cache.backends.redis import CACHE_KEY, RedisCacheBackend
+from dotenv import load_dotenv
 
 from app.models.weather import WeatherResponse
 from app.services import weather_service as service
 
 
 router = APIRouter()
+load_dotenv()
+CACHE_TIME = os.getenv("CACHE_TIME_SECONDS")
 
 
 def redis_cache():
@@ -24,18 +28,17 @@ async def get_weather(city: str,
     in_cache = await cache.get(f"{city}{country}")
 
     if not in_cache:
-
         [weather_by_city, forecast_by_city] = await service.get_weather_forecast(city, country)
-
         if weather_by_city.status_code == 200:
             forecast_data = {}
             if forecast_by_city.status_code == 200:
                 forecast_data = forecast_by_city.json()
 
-            weather_response = WeatherResponse.map_data(weather_by_city.json(), forecast_data)
+            weather_response = WeatherResponse.map_data(weather_by_city.json(),
+                                                        forecast_data)
             await cache.set(key=f"{city}{country}",
                             value=str(weather_response.json()),
-                            expire=120)
+                            expire=int(CACHE_TIME))
             return weather_response
         else:
             raise HTTPException(status_code=404, detail=weather_by_city.json())

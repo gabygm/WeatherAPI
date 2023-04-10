@@ -36,7 +36,8 @@ class WeatherResponse(BaseModel):
             if forecast_data:
                 forecast_list = map_list_forecast(forecast_data)
             return cls(
-                location_name=f"{weather_data.get('name')}, {weather_data.get('sys').get('country')}",
+                location_name=f"{weather_data.get('name')}, "
+                              f"{weather_data.get('sys').get('country')}",
                 temperature=f"{temp_celsius}, {temp_fahrenheit}",
                 wind=f"{wind_speed_text}, {wind_speed} m/s, {wind_direction}",
                 cloudiness=f"{weather_data.get('weather')[0].get('description')}",
@@ -61,4 +62,3 @@ def map_list_forecast(data):
         forecast = Forecast.map_data(forecast_day)
         list_forecast.append(forecast)
     return list_forecast
-

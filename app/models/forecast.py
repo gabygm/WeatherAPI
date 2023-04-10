@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 from app.utils.date_time_conversions import convert_date_time
-from app.utils.temperature_conversions import temp_to_celsius, temp_to_fahrenheit
+from app.utils.temperature_conversions import temp_to_celsius,\
+                                              temp_to_fahrenheit
 
 
 class Forecast(BaseModel):
@@ -33,4 +34,3 @@ class Forecast(BaseModel):
             humidity=f"{data.get('main').get('humidity')}%",
             description=f"{data.get('weather')[0].get('description')}%"
         )
-

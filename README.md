@@ -1,4 +1,16 @@
 # WeatherAPI
+<a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/-python-success?logo=python&logoColor=white"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/python-v3.9.6%2B-blue"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/pytest-testing%2B-yellowgreen"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/flake8-Code%20analisys-green"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/asyncio-async%20request-orange"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/FastAPI-apis-brightgreen"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/Redis-cache-lightgrey"></a>
+<a href="https://pypi.org/project/gitignoregh"><img alt="Python Versions" src="https://img.shields.io/badge/pipenv-environment-yellow"></a>
+
+
+
+
 It returns weather information given country and city parameters
 ```http
 GET /weather?city=$City&country=$Country
