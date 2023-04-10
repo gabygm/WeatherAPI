@@ -1,8 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
 from main import app
-from fastapi_cache import caches
-from fastapi_cache.backends.redis import RedisCacheBackend, CACHE_KEY
 
 
 @pytest.fixture

@@ -1,4 +1,3 @@
-import pdb
 import random
 
 from app.models.weather import to_weather

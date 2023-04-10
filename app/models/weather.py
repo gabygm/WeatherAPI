@@ -1,8 +1,10 @@
 from pydantic import BaseModel
 
 from app.utils.date_time_conversions import get_hour_time, convert_date_time
-from app.utils.temperature_conversions import temp_to_celsius, temp_to_fahrenheit
-from app.utils.wind_conversions import convert_speed_wind_to_text, convert_degrees_direction_to_text
+from app.utils.temperature_conversions import temp_to_celsius, \
+                                              temp_to_fahrenheit
+from app.utils.wind_conversions import convert_speed_wind_to_text, \
+                                       convert_degrees_direction_to_text
 
 
 class WeatherResponse(BaseModel):
