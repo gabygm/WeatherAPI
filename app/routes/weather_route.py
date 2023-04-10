@@ -22,11 +22,17 @@ async def get_weather(city: str,
                       country: Annotated[str, Query(max_length=2)],
                       cache: RedisCacheBackend = Depends(redis_cache)):
     in_cache = await cache.get(f"{city}{country}")
+
     if not in_cache:
-        weather_by_city = service.get_weather(city, country)
-        forecast_by_city = service.get_forecast(city, country)
+
+        [weather_by_city, forecast_by_city] = await service.get_weather_forecast(city, country)
+
         if weather_by_city.status_code == 200:
-            weather_response = WeatherResponse.map_data(weather_by_city.json(), forecast_by_city.json())
+            forecast_data = {}
+            if forecast_by_city.status_code == 200:
+                forecast_data = forecast_by_city.json()
+
+            weather_response = WeatherResponse.map_data(weather_by_city.json(), forecast_data)
             await cache.set(key=f"{city}{country}",
                             value=str(weather_response.json()),
                             expire=120)

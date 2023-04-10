@@ -22,29 +22,31 @@ class WeatherResponse(BaseModel):
     forecast: dict
 
     @classmethod
-    def map_data(cls, data_weather, data_forecast):
+    def map_data(cls, weather_data, forecast_data):
         weather_response = None
-        if data_weather:
-            temp = data_weather.get('main').get('temp')
+        if weather_data:
+            temp = weather_data.get('main').get('temp')
             temp_celsius = temp_to_celsius(temp)
             temp_fahrenheit = temp_to_fahrenheit(temp)
-            wind = data_weather.get('wind')
+            wind = weather_data.get('wind')
             wind_speed = wind.get('speed')
             wind_direction = convert_degrees_direction_to_text(wind.get('deg'))
             wind_speed_text = convert_speed_wind_to_text(wind_speed)
-            forecast_list = map_list_forecast(data_forecast)
+            forecast_list = {}
+            if forecast_data:
+                forecast_list = map_list_forecast(forecast_data)
             return cls(
-                location_name=f"{data_weather.get('name')}, {data_weather.get('sys').get('country')}",
+                location_name=f"{weather_data.get('name')}, {weather_data.get('sys').get('country')}",
                 temperature=f"{temp_celsius}, {temp_fahrenheit}",
                 wind=f"{wind_speed_text}, {wind_speed} m/s, {wind_direction}",
-                cloudiness=f"{data_weather.get('weather')[0].get('description')}",
-                pressure=f"{data_weather.get('main').get('pressure')} hpa",
-                humidity=f"{data_weather.get('main').get('humidity')}%",
-                sunrise=f"{get_hour_time(data_weather.get('sys').get('sunrise'))}",
-                sunset=f"{get_hour_time(data_weather.get('sys').get('sunset'))}",
-                geo_coordinates=f"[{round(data_weather.get('coord').get('lat'), 2)}, "
-                                f"{round(data_weather.get('coord').get('lon'), 2)}]",
-                requested_time=f"{convert_date_time(data_weather.get('dt'))}",
+                cloudiness=f"{weather_data.get('weather')[0].get('description')}",
+                pressure=f"{weather_data.get('main').get('pressure')} hpa",
+                humidity=f"{weather_data.get('main').get('humidity')}%",
+                sunrise=f"{get_hour_time(weather_data.get('sys').get('sunrise'))}",
+                sunset=f"{get_hour_time(weather_data.get('sys').get('sunset'))}",
+                geo_coordinates=f"[{round(weather_data.get('coord').get('lat'), 2)}, "
+                                f"{round(weather_data.get('coord').get('lon'), 2)}]",
+                requested_time=f"{convert_date_time(weather_data.get('dt'))}",
                 forecast={
                    'next_weathers': forecast_list
                 }

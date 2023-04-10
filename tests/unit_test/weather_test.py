@@ -41,7 +41,7 @@ class TestConversionData:
 
 
 class TestWeather:
-    def test_given_a_right_data_should_map_to_weather_response(self):
+    def test_given_a_right_weather_and_forecast_data_should_map_to_weather_response(self):
         weather_response = WeatherResponse.map_data(weather_fake_consume_api, forecast_fake_consume_api)
         assert weather_response.location_name == weather_fake_data_response.get('location_name')
         assert weather_response.temperature == weather_fake_data_response.get('temperature')
@@ -57,3 +57,19 @@ class TestWeather:
     def test_given_a_empty_data_should_response_none(self):
         weather_response = WeatherResponse.map_data({}, {})
         assert weather_response is None
+
+    def test_given_weather_data_and_empty_forecast_data_should_response_with_forecast_empty(self):
+        weather_response = WeatherResponse.map_data(weather_fake_consume_api, {})
+        assert weather_response.location_name == weather_fake_data_response.get('location_name')
+        assert weather_response.temperature == weather_fake_data_response.get('temperature')
+        assert weather_response.wind == weather_fake_data_response.get('wind')
+        assert weather_response.cloudiness == weather_fake_data_response.get('cloudiness')
+        assert weather_response.pressure == weather_fake_data_response.get('pressure')
+        assert weather_response.humidity == weather_fake_data_response.get('humidity')
+        assert weather_response.sunrise == weather_fake_data_response.get('sunrise')
+        assert weather_response.sunset == weather_fake_data_response.get('sunset')
+        assert weather_response.geo_coordinates == weather_fake_data_response.get('geo_coordinates')
+        assert weather_response.requested_time == weather_fake_data_response.get('requested_time')
+        assert weather_response.requested_time == weather_fake_data_response.get('requested_time')
+        assert weather_response.forecast == {'next_weathers': {}}
+
