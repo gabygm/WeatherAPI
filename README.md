@@ -11,7 +11,7 @@ python3 -m pip install pipenv
 ```
 
 ### Redis for cache
-To install Redis follow the instructions according your OS.
+To install Redis follow the instructions according your OS, ensure also you start redis 
 https://redis.io/docs/getting-started/installation/
 
 ## Setup
@@ -23,7 +23,7 @@ pipenv sync
 
 Activate the enviroment:
 ```sh
-pipenv shell
+pipenv install
 ```
 Add secrets, copy the example.env file and rename it to .env and then fill in the secrets
 ```
@@ -37,7 +37,7 @@ Run the next command:
 
 Then open in your browser the following url: ```http://127.0.0.1:8000```,
 example endpoint:
-```http://127.0.0.1:5000/weather?city=Bogota&country=co```
+```http://127.0.0.1:8000/weather?city=Bogota&country=co```
 
 
 
@@ -46,18 +46,17 @@ Deactivate the virtual env
  deactivate 
 ```
 
-## Linter
-Run static analysis code
-```
- flake8 app/* 
-```
-
 ## Testing
 
 Run unit test and integration test
 ```sh
  pytest 
 ```
+or
+```sh
+ python -m pytest 
+```
+
 Test coverage
 ```sh
  coverage run -m pytest tests/unit_test 
@@ -67,6 +66,18 @@ Test coverage
 Open endpoint documentation in OpenAPI 
 ```sh
  http://127.0.0.1:8000/docs 
+```
+
+## Linter
+Run static analysis code
+```
+ flake8 app/* 
+```
+
+or
+
+```
+ python -m flake8 app/*
 ```
 
 
