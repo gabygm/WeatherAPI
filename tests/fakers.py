@@ -51,3 +51,45 @@ weather_fake_consume_api = {
     "name": "Bogota",
     "cod": 200
     }
+
+forecast_fake_consume_api = {
+    "cod": "200",
+    "message": 0,
+    "cnt": 1,
+    "list": [
+        {"dt": 1681160400,
+         "main": {
+             "temp": 290.14,
+             "feels_like": 289.62,
+             "temp_min": 288.67,
+             "temp_max": 290.14,
+             "pressure": 1022,
+             "sea_level": 1022,
+             "grnd_level": 752,
+             "humidity": 66,
+             "temp_kf": 1.47
+            },
+         "weather": [
+            {
+                "id": 500,
+                "main": "Rain",
+                "description": "light rain",
+                "icon": "10d"
+            }
+        ],
+         "clouds": {
+            "all": 80
+        },
+         "wind": {
+            "speed": 1.21,
+            "deg": 147,
+            "gust": 2.28
+            },
+         "rain": {
+            "3h": 2.21
+            },
+         "sys": {
+            "pod": "d"
+            },
+         "dt_txt": "2023-04-10 21:00:00"}
+    ],}

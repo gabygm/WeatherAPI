@@ -1,10 +1,10 @@
 import random
 
-from app.models.weather import to_weather
+from app.models.weather import WeatherResponse
 from app.utils.date_time_conversions import get_hour_time
 from app.utils.temperature_conversions import temp_to_celsius, temp_to_fahrenheit
 from app.utils.wind_conversions import convert_degrees_direction_to_text, convert_speed_wind_to_text
-from tests.fakers import weather_fake_consume_api, weather_fake_data_response
+from tests.fakers import weather_fake_consume_api, weather_fake_data_response, forecast_fake_consume_api
 
 
 class TestConversionData:
@@ -42,7 +42,7 @@ class TestConversionData:
 
 class TestWeather:
     def test_given_a_right_data_should_map_to_weather_response(self):
-        weather_response = to_weather(weather_fake_consume_api)
+        weather_response = WeatherResponse.map_data(weather_fake_consume_api, forecast_fake_consume_api)
         assert weather_response.location_name == weather_fake_data_response.get('location_name')
         assert weather_response.temperature == weather_fake_data_response.get('temperature')
         assert weather_response.wind == weather_fake_data_response.get('wind')
@@ -54,6 +54,6 @@ class TestWeather:
         assert weather_response.geo_coordinates == weather_fake_data_response.get('geo_coordinates')
         assert weather_response.requested_time == weather_fake_data_response.get('requested_time')
 
-    def test_given_a_empty_data_should_response(self):
-        weather_response = to_weather({})
+    def test_given_a_empty_data_should_response_none(self):
+        weather_response = WeatherResponse.map_data({}, {})
         assert weather_response is None

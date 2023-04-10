@@ -1,5 +1,6 @@
 import logging
 import os
+
 import httpx
 from dotenv import load_dotenv
 
@@ -8,10 +9,10 @@ URL = os.getenv("URL")
 APP_ID = os.getenv("APP_ID")
 
 
-def call_service(url, city, country, cnt=1):
+def call_service(url, city, country, cnt=12):
     client = httpx.Client()
     try:
-        response = client.get(f"{URL}/{url}", params={"q": f"{city},{country}", cnt: cnt, "appid": APP_ID})
+        response = client.get(f"{URL}/{url}", params={"q": f"{city},{country}", 'cnt': cnt, "appid": APP_ID})
         return response
     except httpx.HTTPError as exc:
         logging.error(f"Error consuming weather service - {exc}")

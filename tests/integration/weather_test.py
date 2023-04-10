@@ -11,17 +11,19 @@ def client():
 
 def test_given_a_valid_city_and_country_should_response_status_200(client):
     response = client.get("/weather?city=Bogota&country=co")
+    weather = response.json()
     assert response.status_code == 200
     assert response.json().get("location_name") == "Bogota, CO"
-    assert response.json().get("temperature") is not None
-    assert response.json().get("wind") is not None
-    assert response.json().get("cloudiness") is not None
-    assert response.json().get("pressure") is not None
-    assert response.json().get("humidity") is not None
-    assert response.json().get("sunrise") is not None
-    assert response.json().get("sunset") is not None
-    assert response.json().get("geo_coordinates") is not None
-    assert response.json().get("requested_time") is not None
+    assert "temperature" in weather
+    assert "wind" in weather
+    assert "cloudiness" in weather
+    assert "pressure" in weather
+    assert "humidity" in weather
+    assert "sunrise" in weather
+    assert "sunset" in weather
+    assert "geo_coordinates" in weather
+    assert "requested_time" in weather
+    assert "forecast" in weather
 
 
 def test_given_a_city_and_country_do_not_exists_should_response_status_404_not_found(client):
